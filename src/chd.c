@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include "chd.h"
 
-int handle_read_file(FILE *fp, char *path) 
+int handle_read_file(FILE **fp, char *path) 
 {
-    fp = fopen(path, "rb");
+    *fp = fopen(path, "rb");
     if (!fp) {
         return -1;
     } 
@@ -16,13 +16,9 @@ int handle_read_file(FILE *fp, char *path)
 void read_binary(FILE *fp)
 {
     unsigned char buffer_byte;
-    // while (fread(&buffer_byte, sizeof(char), 1, fp) > 0) {
-    //     printf("%c", buffer_byte);
-    // }
-    printf("runs?");
-    fread(&buffer_byte, sizeof(char), 1, fp);
-    printf("ran");
-    printf("%c", buffer_byte);
+    while (fread(&buffer_byte, sizeof(char), 1, fp) > 0) {
+        printf("%X", buffer_byte);
+    }
 }
 
 
@@ -31,7 +27,7 @@ int main(int argc, char *argv[])
     FILE *fp;
     if (argc == 2) {
         char* path = argv[1];
-        if (handle_read_file(fp, path)) {
+        if (handle_read_file(&fp, path)) {
             printf("Cannot find file %s\n", path);
             exit(2);
         }
