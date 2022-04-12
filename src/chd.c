@@ -13,6 +13,18 @@ int handle_read_file(FILE *fp, char *path)
     }
 }
 
+void read_binary(FILE *fp)
+{
+    unsigned char buffer_byte;
+    // while (fread(&buffer_byte, sizeof(char), 1, fp) > 0) {
+    //     printf("%c", buffer_byte);
+    // }
+    printf("runs?");
+    fread(&buffer_byte, sizeof(char), 1, fp);
+    printf("ran");
+    printf("%c", buffer_byte);
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -23,6 +35,7 @@ int main(int argc, char *argv[])
             printf("Cannot find file %s\n", path);
             exit(2);
         }
+        read_binary(fp);
     }
     else {
         printf("Usage: \n");
